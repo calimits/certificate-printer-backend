@@ -1,0 +1,748 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Certificate Printer API",
+    "version": "1.0.0",
+    "description": "Certificate Printer API docs."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Servidor local"
+    }
+  ],
+  "paths": {
+    "/api-cert-printer/users/{username}": {
+      "get": {
+        "summary": "Gets an user info.",
+        "description": "Gets an user ID, name and email.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "username",
+            "required": true,
+            "description": "User name",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User Info",
+            "content": {
+              "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+           "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/e404"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Updates an user.",
+        "description": "Updates an user password, name and/or email.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "username",
+            "required": true,
+            "description": "User name",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "description": "Authentication token.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "User info",
+          "required": true,
+          "content": {
+            "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/UserData"
+                }
+              }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User updated succesfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/resOk"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An error ocurred during update.",
+            "content": {
+              "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/e500"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletes an user.",
+        "description": "Deletes an user fromthe database.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "username",
+            "required": true,
+            "description": "User name",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "description": "Authentication token.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "User info",
+          "required": true,
+          "content": {
+            "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/UserData"
+                }
+              }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User deleted succesfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/resOk"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An error ocurred while deleting",
+            "content": {
+              "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/e500"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api-cert-printer/users": {
+      "get": {
+        "summary": "Gets a list of all users.",
+        "description": "Gets all users IDs, names and emails.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "start",
+            "required": false,
+            "description": "Select the user index to get.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "description": "Select the users limit to get. Maximum is 20.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All users Info",
+            "content": {
+              "application/json": {
+                 "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Creates an user.",
+        "description": "Creates an user that has ID, name and email.",
+        "requestBody": {
+          "description": "User info",
+          "required": true,
+          "content": {
+            "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/UserData"
+                }
+              }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User created succesfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/resOk"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An error ocurred during creation",
+            "content": {
+              "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/e500"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api-cert-printer/login/users/": {
+      "post": {
+        "summary": "User login.",
+        "description": "Returns a token if login succesfully.",
+        "requestBody": {
+          "description": "User info",
+          "required": true,
+          "content": {
+            "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/UserData"
+                }
+              }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User logged in succesfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/jwtToken"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed to login"
+          }
+        }
+      }
+    },
+    "/api-cert-printer/certificates/{id}": {
+      "get": {
+        "summary": "Gets a certificate info.",
+        "description": "Gets a full certificate data.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "ID",
+            "required": true,
+            "description": "Certificate ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Certificate data",
+            "content": {
+              "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/Certificate"
+                }
+              }
+            }
+          },
+           "404": {
+            "description": "Certificate not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/e404"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Updates a certificate info.",
+        "description": "Updates a full certificate data.",
+        "requestBody": {
+          "description": "Certificate data to update.",
+          "required": true,
+          "content": {
+            "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/Certificate"
+                }
+              }
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "ID",
+            "required": true,
+            "description": "Certificate ID",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "description": "Authentication token.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Certificate updated succesfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/resOk"
+                }
+              }
+            }
+          },
+           "400": {
+            "description": "An error ocurred while updating"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletes a certificate info.",
+        "description": "Deletes a full certificate data.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "ID",
+            "required": true,
+            "description": "Certificate ID",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "description": "Authentication token.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Certificate deleted succesfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/resOk"
+                }
+              }
+            }
+          },
+           "400": {
+            "description": "An error ocurred while deleting"
+          }
+        }
+      }
+    },
+    "/api-cert-printer/certificates": {
+      "get": {
+        "summary": "Gets a list of all certificates.",
+        "description": "Gets a list of all certificates data.",
+        "responses": {
+          "200": {
+            "description": "Certificates data",
+            "content": {
+              "application/json": {
+                 "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Certificate"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Creates a certificate info.",
+        "description": "Creates a full certificate data.",
+        "requestBody": {
+          "description": "Certificate data.",
+          "required": true,
+          "content": {
+            "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/Certificate"
+                }
+              }
+          }
+        },
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "description": "Authentication token.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Certificate created succesfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/resOk"
+                }
+              }
+            }
+          },
+           "500": {
+            "description": "An error ocurred while updating",
+            "content": {
+              "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/e500"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletes all certificates info.",
+        "description": "Deletes all certificates data from database.",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "description": "Authentication token.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Certificates deleted succesfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/resOk"
+                }
+              }
+            }
+          },
+           "400": {
+            "description": "An error ocurred while deleting"
+          }
+        }
+      }
+    },
+    "/api-cert-printer/certificates/users/{username}": {
+      "get": {
+        "summary": "Gets a list of all certificates from one user.",
+        "description": "Gets a list of all certificates data from one user.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "ID",
+            "required": true,
+            "description": "Certificate ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Certificates data",
+            "content": {
+              "application/json": {
+                 "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Certificate"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletes all certificates info fromone user.",
+        "description": "Deletes all certificates data from database.",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "description": "Authentication token.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Certificates deleted succesfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/resOk"
+                }
+              }
+            }
+          },
+           "400": {
+            "description": "An error ocurred while deleting"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "User ID"
+          },
+          "name": {
+            "type": "string",
+            "description": "User name"
+          },
+          "email": {
+            "type": "string",
+            "description": "User email"
+          }
+        },
+        "example": {
+          "id": "sdhkj2h3e972hdk237g2",
+          "name": "Juan",
+          "email": "juan@gmail.com"
+        }
+      },
+      "Certificate": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Certificate ID"
+          },
+          "username": {
+            "type": "string",
+            "description": "User name"
+          },
+          "names": {
+            "type": "string",
+            "description": "Certificate owners"
+          },
+          "role": {
+            "type": "string",
+            "description": "Certificate role"
+          },
+          "description": {
+            "type": "string",
+            "description": "Certificate description"
+          },
+          "type": {
+            "type": "string",
+            "description": "Certificate type"
+          },
+          "typename": {
+            "type": "string",
+            "description": "Certificate typename"
+          },
+          "workname": {
+            "type": "string",
+            "description": "Certificate workname"
+          },
+          "tome": {
+            "type": "string",
+            "description": "Certificate tome"
+          },
+          "folio": {
+            "type": "string",
+            "description": "Certificate folio"
+          },
+          "date": {
+            "type": "string",
+            "description": "Certificate date"
+          },
+          "header": {
+            "type": "string",
+            "description": "Certificate date"
+          },
+          "footer": {
+            "type": "string",
+            "description": "Certificate date"
+          }
+        },
+        "example": {
+          "id": "sdhkj2h3e972hdk237g2",
+          "username": "Juan",
+          "names": "Juan Fdez, Roberto Smith",
+          "role": "Teacher",
+          "description": "Small description....",
+          "type": "Card",
+          "typename": "some typename",
+          "workname": "some workname",
+          "date": "03/05/2025",
+          "firms": "Esteban"
+        }
+      },
+      "UserData": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User name"
+          },
+          "email": {
+            "type": "string",
+            "description": "User email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User password"
+          }
+        },
+        "example": {
+          "password": "Juan?123",
+          "name": "Juan",
+          "email": "juan@gmail.com"
+        }
+      },
+      "jwtToken": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "JWT"
+          }
+        },
+        "example": {
+          "token": "asjdhqp732y3bdpiy23gdty2vlfh2b3kjd23yvc2y83icbk2h3bpy2gvcpy23iy2dbiyeb"
+        }
+      },
+      "e404": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "description": "Error code"
+          },
+          "info": {
+            "type": "string",
+            "description": "Error Info"
+          }
+        },
+        "example": {
+          "code": "404",
+          "info": "Resource not found"
+        }
+      },
+      "e500": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "description": "Error code"
+          },
+          "info": {
+            "type": "string",
+            "description": "Error Info"
+          }
+        },
+        "example": {
+          "code": "500",
+          "info": "Internal Server Error"
+        }
+      },
+      "resOk": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "description": "Code 200"
+          },
+          "info": {
+            "type": "string",
+            "description": "Message info"
+          }
+        },
+        "example": {
+          "code": "200",
+          "info": "Operation completed succesfully"
+        }
+      }
+    }
+  }
+}
