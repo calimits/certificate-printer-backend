@@ -1,7 +1,7 @@
 {
   "name": "certificate-printer",
   "type": "module",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,17 +11,17 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@types/express": "file:types-express-5.0.0.tgz",
-    "bcrypt": "file:bcrypt-5.1.1.tgz",
-    "cors": "file:cors-2.8.5.tgz",
-    "dotenv": "file:dotenv-16.4.7.tgz",
-    "express": "file:express-4.21.2.tgz",
-    "helmet": "file:helmet-8.0.0.tgz",
-    "jsonwebtoken": "file:jsonwebtoken-9.0.2.tgz",
-    "mongoose": "file:mongoose-8.10.1.tgz",
+    "@types/express": "^5.0.0",
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.10.1",
     "mongoose-fuzzy-search": "^0.0.4",
-    "mongoose-fuzzy-searching": "file:mongoose-fuzzy-searching-2.0.2.tgz",
-    "morgan": "file:morgan-1.10.0.tgz",
-    "swagger-ui-express": "file:swagger-ui-express-5.0.1.tgz"
+    "mongoose-fuzzy-searching": "^2.0.2",
+    "morgan": "^1.10.0",
+    "swagger-ui-express": "^5.0.1"
   }
 }
