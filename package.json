@@ -19,7 +19,7 @@
     "express": "^4.21.2",
     "helmet": "^8.0.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.10.1",
+    "mongoose": "8.10.1",
     "mongoose-fuzzy-search": "^0.0.4",
     "mongoose-fuzzy-searching": "^2.0.2",
     "morgan": "^1.10.0",
