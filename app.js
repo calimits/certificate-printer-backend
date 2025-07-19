@@ -16,7 +16,13 @@ const __dirname = path.resolve();
 const PORT = process.env.PORT || 3000;
 const app = express();
 
-app.use(cors());
+//dev cors, change later
+app.use(cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["COntent-type", "Authorization"]
+}));
+
 app.use(morgan("dev"));
 app.use(helmet());
 
