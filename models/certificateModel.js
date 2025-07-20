@@ -21,7 +21,6 @@ const certificateSchema = new Schema({
     }, 
     type: {
         type: String,
-        required: true
     },
     typename: {
         type: String,
