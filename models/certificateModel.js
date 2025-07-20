@@ -15,7 +15,6 @@ const certificateSchema = new Schema({
     },
     role: {
         type: String,
-        required: true
     },
     description: {
         type: String,
